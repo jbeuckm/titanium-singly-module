@@ -1,0 +1,546 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		24416B8111C4CA220047AFDD /* Build & Test */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 24416B8A11C4CA520047AFDD /* Build configuration list for PBXAggregateTarget "Build & Test" */;
+			buildPhases = (
+				24416B8011C4CA220047AFDD /* ShellScript */,
+			);
+			dependencies = (
+				24416B8511C4CA280047AFDD /* PBXTargetDependency */,
+			);
+			name = "Build & Test";
+			productName = "Build & test";
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		24DD6CF91134B3F500162E58 /* SinglyModule.h in Headers */ = {isa = PBXBuildFile; fileRef = 24DD6CF71134B3F500162E58 /* SinglyModule.h */; };
+		24DD6CFA1134B3F500162E58 /* SinglyModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DD6CF81134B3F500162E58 /* SinglyModule.m */; };
+		24DE9E1111C5FE74003F90F6 /* SinglyModuleAssets.h in Headers */ = {isa = PBXBuildFile; fileRef = 24DE9E0F11C5FE74003F90F6 /* SinglyModuleAssets.h */; };
+		24DE9E1211C5FE74003F90F6 /* SinglyModuleAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DE9E1011C5FE74003F90F6 /* SinglyModuleAssets.m */; };
+		AA747D9F0F9514B9006C5449 /* Singly_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AA747D9E0F9514B9006C5449 /* Singly_Prefix.pch */; };
+		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
+		D81CD6A7167B9FC500B9048B /* SinglySDK in Frameworks */ = {isa = PBXBuildFile; fileRef = D81CD6A6167B9FC500B9048B /* SinglySDK */; };
+		D81CD6B6167B9FD000B9048B /* SinglyConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = D81CD6A8167B9FD000B9048B /* SinglyConstants.h */; };
+		D81CD6B7167B9FD000B9048B /* SinglyFacebookService.h in Headers */ = {isa = PBXBuildFile; fileRef = D81CD6A9167B9FD000B9048B /* SinglyFacebookService.h */; };
+		D81CD6B8167B9FD000B9048B /* SinglyFriendPickerCell.h in Headers */ = {isa = PBXBuildFile; fileRef = D81CD6AA167B9FD000B9048B /* SinglyFriendPickerCell.h */; };
+		D81CD6B9167B9FD000B9048B /* SinglyFriendPickerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D81CD6AB167B9FD000B9048B /* SinglyFriendPickerViewController.h */; };
+		D81CD6BA167B9FD000B9048B /* SinglyLoginPickerServiceCell.h in Headers */ = {isa = PBXBuildFile; fileRef = D81CD6AC167B9FD000B9048B /* SinglyLoginPickerServiceCell.h */; };
+		D81CD6BB167B9FD000B9048B /* SinglyLoginPickerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D81CD6AD167B9FD000B9048B /* SinglyLoginPickerViewController.h */; };
+		D81CD6BC167B9FD000B9048B /* SinglyLoginPickerViewController+Delegate.h in Headers */ = {isa = PBXBuildFile; fileRef = D81CD6AE167B9FD000B9048B /* SinglyLoginPickerViewController+Delegate.h */; };
+		D81CD6BD167B9FD000B9048B /* SinglyLoginViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D81CD6AF167B9FD000B9048B /* SinglyLoginViewController.h */; };
+		D81CD6BE167B9FD000B9048B /* SinglyLoginViewController+Delegate.h in Headers */ = {isa = PBXBuildFile; fileRef = D81CD6B0167B9FD000B9048B /* SinglyLoginViewController+Delegate.h */; };
+		D81CD6BF167B9FD000B9048B /* SinglyRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D81CD6B1167B9FD000B9048B /* SinglyRequest.h */; };
+		D81CD6C0167B9FD000B9048B /* SinglySDK.h in Headers */ = {isa = PBXBuildFile; fileRef = D81CD6B2167B9FD000B9048B /* SinglySDK.h */; };
+		D81CD6C1167B9FD000B9048B /* SinglyService.h in Headers */ = {isa = PBXBuildFile; fileRef = D81CD6B3167B9FD000B9048B /* SinglyService.h */; };
+		D81CD6C2167B9FD000B9048B /* SinglyService+Delegate.h in Headers */ = {isa = PBXBuildFile; fileRef = D81CD6B4167B9FD000B9048B /* SinglyService+Delegate.h */; };
+		D81CD6C3167B9FD000B9048B /* SinglySession.h in Headers */ = {isa = PBXBuildFile; fileRef = D81CD6B5167B9FD000B9048B /* SinglySession.h */; };
+		D81CD6D8167BFDE800B9048B /* SinglyViewProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = D81CD6D6167BFDE800B9048B /* SinglyViewProxy.h */; };
+		D81CD6D9167BFDE800B9048B /* SinglyViewProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = D81CD6D7167BFDE800B9048B /* SinglyViewProxy.m */; };
+		D81CD6DC167BFDF800B9048B /* SinglyView.h in Headers */ = {isa = PBXBuildFile; fileRef = D81CD6DA167BFDF800B9048B /* SinglyView.h */; };
+		D81CD6DD167BFDF800B9048B /* SinglyView.m in Sources */ = {isa = PBXBuildFile; fileRef = D81CD6DB167BFDF800B9048B /* SinglyView.m */; };
+		D87A28C0167B967600522007 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D87A28BF167B967600522007 /* Accounts.framework */; };
+		D87A28C3167B968300522007 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D87A28C2167B968300522007 /* QuartzCore.framework */; };
+		D87A28C5167B968800522007 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D87A28C4167B968800522007 /* Security.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		24416B8411C4CA280047AFDD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = singly;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		24DD6CF71134B3F500162E58 /* SinglyModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SinglyModule.h; path = Classes/SinglyModule.h; sourceTree = "<group>"; };
+		24DD6CF81134B3F500162E58 /* SinglyModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SinglyModule.m; path = Classes/SinglyModule.m; sourceTree = "<group>"; };
+		24DD6D1B1134B66800162E58 /* titanium.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = titanium.xcconfig; sourceTree = "<group>"; };
+		24DE9E0F11C5FE74003F90F6 /* SinglyModuleAssets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SinglyModuleAssets.h; path = Classes/SinglyModuleAssets.h; sourceTree = "<group>"; };
+		24DE9E1011C5FE74003F90F6 /* SinglyModuleAssets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SinglyModuleAssets.m; path = Classes/SinglyModuleAssets.m; sourceTree = "<group>"; };
+		AA747D9E0F9514B9006C5449 /* Singly_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Singly_Prefix.pch; sourceTree = SOURCE_ROOT; };
+		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D2AAC07E0554694100DB518D /* libSingly.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSingly.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D81CD6A6167B9FC500B9048B /* SinglySDK */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = SinglySDK; sourceTree = "<group>"; };
+		D81CD6A8167B9FD000B9048B /* SinglyConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglyConstants.h; sourceTree = "<group>"; };
+		D81CD6A9167B9FD000B9048B /* SinglyFacebookService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglyFacebookService.h; sourceTree = "<group>"; };
+		D81CD6AA167B9FD000B9048B /* SinglyFriendPickerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglyFriendPickerCell.h; sourceTree = "<group>"; };
+		D81CD6AB167B9FD000B9048B /* SinglyFriendPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglyFriendPickerViewController.h; sourceTree = "<group>"; };
+		D81CD6AC167B9FD000B9048B /* SinglyLoginPickerServiceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglyLoginPickerServiceCell.h; sourceTree = "<group>"; };
+		D81CD6AD167B9FD000B9048B /* SinglyLoginPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglyLoginPickerViewController.h; sourceTree = "<group>"; };
+		D81CD6AE167B9FD000B9048B /* SinglyLoginPickerViewController+Delegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SinglyLoginPickerViewController+Delegate.h"; sourceTree = "<group>"; };
+		D81CD6AF167B9FD000B9048B /* SinglyLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglyLoginViewController.h; sourceTree = "<group>"; };
+		D81CD6B0167B9FD000B9048B /* SinglyLoginViewController+Delegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SinglyLoginViewController+Delegate.h"; sourceTree = "<group>"; };
+		D81CD6B1167B9FD000B9048B /* SinglyRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglyRequest.h; sourceTree = "<group>"; };
+		D81CD6B2167B9FD000B9048B /* SinglySDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglySDK.h; sourceTree = "<group>"; };
+		D81CD6B3167B9FD000B9048B /* SinglyService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglyService.h; sourceTree = "<group>"; };
+		D81CD6B4167B9FD000B9048B /* SinglyService+Delegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SinglyService+Delegate.h"; sourceTree = "<group>"; };
+		D81CD6B5167B9FD000B9048B /* SinglySession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglySession.h; sourceTree = "<group>"; };
+		D81CD6D6167BFDE800B9048B /* SinglyViewProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglyViewProxy.h; sourceTree = "<group>"; };
+		D81CD6D7167BFDE800B9048B /* SinglyViewProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinglyViewProxy.m; sourceTree = "<group>"; };
+		D81CD6DA167BFDF800B9048B /* SinglyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglyView.h; sourceTree = "<group>"; };
+		D81CD6DB167BFDF800B9048B /* SinglyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinglyView.m; sourceTree = "<group>"; };
+		D87A28BF167B967600522007 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		D87A28C2167B968300522007 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		D87A28C4167B968800522007 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D2AAC07C0554694100DB518D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D87A28C5167B968800522007 /* Security.framework in Frameworks */,
+				D87A28C3167B968300522007 /* QuartzCore.framework in Frameworks */,
+				D87A28C0167B967600522007 /* Accounts.framework in Frameworks */,
+				AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */,
+				D81CD6A7167B9FC500B9048B /* SinglySDK in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DFFF38A50411DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2AAC07E0554694100DB518D /* libSingly.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* singly */ = {
+			isa = PBXGroup;
+			children = (
+				D81CD6A5167B9FB600B9048B /* Singly */,
+				08FB77AEFE84172EC02AAC07 /* Classes */,
+				32C88DFF0371C24200C91783 /* Other Sources */,
+				0867D69AFE84028FC02AAC07 /* Frameworks */,
+				034768DFFF38A50411DB9C8B /* Products */,
+			);
+			name = singly;
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D87A28C2167B968300522007 /* QuartzCore.framework */,
+				D87A28BF167B967600522007 /* Accounts.framework */,
+				D87A28C4167B968800522007 /* Security.framework */,
+				AACBBE490F95108600F1A2B1 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		08FB77AEFE84172EC02AAC07 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				24DE9E0F11C5FE74003F90F6 /* SinglyModuleAssets.h */,
+				24DE9E1011C5FE74003F90F6 /* SinglyModuleAssets.m */,
+				24DD6CF71134B3F500162E58 /* SinglyModule.h */,
+				24DD6CF81134B3F500162E58 /* SinglyModule.m */,
+				D81CD6D6167BFDE800B9048B /* SinglyViewProxy.h */,
+				D81CD6D7167BFDE800B9048B /* SinglyViewProxy.m */,
+				D81CD6DA167BFDF800B9048B /* SinglyView.h */,
+				D81CD6DB167BFDF800B9048B /* SinglyView.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		32C88DFF0371C24200C91783 /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				AA747D9E0F9514B9006C5449 /* Singly_Prefix.pch */,
+				24DD6D1B1134B66800162E58 /* titanium.xcconfig */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		D81CD6A5167B9FB600B9048B /* Singly */ = {
+			isa = PBXGroup;
+			children = (
+				D81CD6A8167B9FD000B9048B /* SinglyConstants.h */,
+				D81CD6A9167B9FD000B9048B /* SinglyFacebookService.h */,
+				D81CD6AA167B9FD000B9048B /* SinglyFriendPickerCell.h */,
+				D81CD6AB167B9FD000B9048B /* SinglyFriendPickerViewController.h */,
+				D81CD6AC167B9FD000B9048B /* SinglyLoginPickerServiceCell.h */,
+				D81CD6AD167B9FD000B9048B /* SinglyLoginPickerViewController.h */,
+				D81CD6AE167B9FD000B9048B /* SinglyLoginPickerViewController+Delegate.h */,
+				D81CD6AF167B9FD000B9048B /* SinglyLoginViewController.h */,
+				D81CD6B0167B9FD000B9048B /* SinglyLoginViewController+Delegate.h */,
+				D81CD6B1167B9FD000B9048B /* SinglyRequest.h */,
+				D81CD6B2167B9FD000B9048B /* SinglySDK.h */,
+				D81CD6B3167B9FD000B9048B /* SinglyService.h */,
+				D81CD6B4167B9FD000B9048B /* SinglyService+Delegate.h */,
+				D81CD6B5167B9FD000B9048B /* SinglySession.h */,
+				D81CD6A6167B9FC500B9048B /* SinglySDK */,
+			);
+			name = Singly;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D2AAC07A0554694100DB518D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA747D9F0F9514B9006C5449 /* Singly_Prefix.pch in Headers */,
+				24DD6CF91134B3F500162E58 /* SinglyModule.h in Headers */,
+				24DE9E1111C5FE74003F90F6 /* SinglyModuleAssets.h in Headers */,
+				D81CD6B6167B9FD000B9048B /* SinglyConstants.h in Headers */,
+				D81CD6B7167B9FD000B9048B /* SinglyFacebookService.h in Headers */,
+				D81CD6B8167B9FD000B9048B /* SinglyFriendPickerCell.h in Headers */,
+				D81CD6B9167B9FD000B9048B /* SinglyFriendPickerViewController.h in Headers */,
+				D81CD6BA167B9FD000B9048B /* SinglyLoginPickerServiceCell.h in Headers */,
+				D81CD6BB167B9FD000B9048B /* SinglyLoginPickerViewController.h in Headers */,
+				D81CD6BC167B9FD000B9048B /* SinglyLoginPickerViewController+Delegate.h in Headers */,
+				D81CD6BD167B9FD000B9048B /* SinglyLoginViewController.h in Headers */,
+				D81CD6BE167B9FD000B9048B /* SinglyLoginViewController+Delegate.h in Headers */,
+				D81CD6BF167B9FD000B9048B /* SinglyRequest.h in Headers */,
+				D81CD6C0167B9FD000B9048B /* SinglySDK.h in Headers */,
+				D81CD6C1167B9FD000B9048B /* SinglyService.h in Headers */,
+				D81CD6C2167B9FD000B9048B /* SinglyService+Delegate.h in Headers */,
+				D81CD6C3167B9FD000B9048B /* SinglySession.h in Headers */,
+				D81CD6D8167BFDE800B9048B /* SinglyViewProxy.h in Headers */,
+				D81CD6DC167BFDF800B9048B /* SinglyView.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D2AAC07D0554694100DB518D /* singly */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "singly" */;
+			buildPhases = (
+				D2AAC07A0554694100DB518D /* Headers */,
+				D2AAC07B0554694100DB518D /* Sources */,
+				D2AAC07C0554694100DB518D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = singly;
+			productName = singly;
+			productReference = D2AAC07E0554694100DB518D /* libSingly.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "singly" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 0867D691FE84028FC02AAC07 /* singly */;
+			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D2AAC07D0554694100DB518D /* singly */,
+				24416B8111C4CA220047AFDD /* Build & Test */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		24416B8011C4CA220047AFDD /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# shell script goes here\n\npython \"${TITANIUM_SDK}/titanium.py\" run --dir=\"${PROJECT_DIR}\"\nexit $?\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D2AAC07B0554694100DB518D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				24DD6CFA1134B3F500162E58 /* SinglyModule.m in Sources */,
+				24DE9E1211C5FE74003F90F6 /* SinglyModuleAssets.m in Sources */,
+				D81CD6D9167BFDE800B9048B /* SinglyViewProxy.m in Sources */,
+				D81CD6DD167BFDF800B9048B /* SinglyView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		24416B8511C4CA280047AFDD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2AAC07D0554694100DB518D /* singly */;
+			targetProxy = 24416B8411C4CA280047AFDD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB921F08733DC00010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 24DD6D1B1134B66800162E58 /* titanium.xcconfig */;
+			buildSettings = {
+				ARCHS = (
+					armv6,
+					armv7,
+				);
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					armv7,
+				);
+				"ARCHS[sdk=iphonesimulator*]" = i386;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DSTROOT = /tmp/Singly.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Singly_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = "TI_VERSION=$(TI_VERSION)";
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_STRICT_SELECTOR_MATCH = NO;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				INSTALL_PATH = /usr/local/lib;
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CFLAGS = (
+					"-DDEBUG",
+					"-DTI_POST_1_2",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = Singly;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				RUN_CLANG_STATIC_ANALYZER = NO;
+				SDKROOT = iphoneos;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Debug;
+		};
+		1DEB922008733DC00010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 24DD6D1B1134B66800162E58 /* titanium.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					armv6,
+					armv7,
+				);
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					armv7,
+				);
+				"ARCHS[sdk=iphonesimulator*]" = i386;
+				DSTROOT = /tmp/Singly.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Singly_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = "TI_VERSION=$(TI_VERSION)";
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_STRICT_SELECTOR_MATCH = NO;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				INSTALL_PATH = /usr/local/lib;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CFLAGS = "-DTI_POST_1_2";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = Singly;
+				RUN_CLANG_STATIC_ANALYZER = NO;
+				SDKROOT = iphoneos;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Release;
+		};
+		1DEB922308733DC00010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 24DD6D1B1134B66800162E58 /* titanium.xcconfig */;
+			buildSettings = {
+				ARCHS = (
+					armv6,
+					armv7,
+				);
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					armv7,
+				);
+				"ARCHS[sdk=iphonesimulator*]" = i386;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DSTROOT = /tmp/Singly.dst;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Singly_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = "TI_VERSION=$(TI_VERSION)";
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_STRICT_SELECTOR_MATCH = NO;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				INSTALL_PATH = /usr/local/lib;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = (
+					"-DDEBUG",
+					"-DTI_POST_1_2",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = Singly;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				RUN_CLANG_STATIC_ANALYZER = NO;
+				SDKROOT = iphoneos;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Debug;
+		};
+		1DEB922408733DC00010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 24DD6D1B1134B66800162E58 /* titanium.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					armv6,
+					armv7,
+				);
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					armv7,
+				);
+				"ARCHS[sdk=iphonesimulator*]" = i386;
+				DSTROOT = /tmp/Singly.dst;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Singly_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = "TI_VERSION=$(TI_VERSION)";
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_STRICT_SELECTOR_MATCH = NO;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				INSTALL_PATH = /usr/local/lib;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DTI_POST_1_2";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = Singly;
+				RUN_CLANG_STATIC_ANALYZER = NO;
+				SDKROOT = iphoneos;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Release;
+		};
+		24416B8211C4CA220047AFDD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 24DD6D1B1134B66800162E58 /* titanium.xcconfig */;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "Build & test";
+			};
+			name = Debug;
+		};
+		24416B8311C4CA220047AFDD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 24DD6D1B1134B66800162E58 /* titanium.xcconfig */;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = "Build & test";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "singly" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB921F08733DC00010E9CD /* Debug */,
+				1DEB922008733DC00010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "singly" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB922308733DC00010E9CD /* Debug */,
+				1DEB922408733DC00010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		24416B8A11C4CA520047AFDD /* Build configuration list for PBXAggregateTarget "Build & Test" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				24416B8211C4CA220047AFDD /* Debug */,
+				24416B8311C4CA220047AFDD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}
