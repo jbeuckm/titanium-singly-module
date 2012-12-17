@@ -30,13 +30,15 @@
     session.clientID = [TiUtils stringValue:[args objectForKey:@"clientID"]];
     session.clientSecret = [TiUtils stringValue:[args objectForKey:@"clientSecret"]];
     
-    NSLog([NSString stringWithFormat:@"clientID: %@", session.clientID]);
-    NSLog([NSString stringWithFormat:@"clientSecret: %@", session.clientSecret]);
-    
     [session startSessionWithCompletionHandler:^(BOOL ready) {
         if (ready) {
+            NSDictionary *sessionData = [[NSDictionary alloc] initWithObjectsAndKeys:
+                session.accessToken, @"accessToken",
+                session.accountID, @"accoundID",
+                nil
+            ];
             // The session is ready to go!
-            [self _fireEventToListener:@"success" withObject:nil listener:successCallback thisObject:nil];
+            [self _fireEventToListener:@"success" withObject:sessionData listener:successCallback thisObject:nil];
         } else {
             // You will need to auth with a service...
             [self _fireEventToListener:@"cancel" withObject:nil listener:cancelCallback thisObject:nil];
@@ -46,39 +48,82 @@
 
 -(void)requestAuthorization:(id)args
 {
+    ENSURE_UI_THREAD_1_ARG(args);
+    ENSURE_SINGLE_ARG(args,NSDictionary);
+
     NSString *serviceName = [TiUtils stringValue:[args objectForKey:@"serviceName"]];
+    //NSLog([NSString stringWithFormat:@"serviceName: %@", serviceName]);
+    
     SinglyService *service = [SinglyService serviceWithIdentifier:serviceName];
     service.delegate = self;
     
-    UIViewController *controller = [[UIViewController alloc] init];
+    UIViewController *controller = [[[UIApplication sharedApplication] keyWindow] rootViewController];
     
     [service requestAuthorizationFromViewController:controller];
 }
 
-
-
 - (void)singlyServiceDidAuthorize:(SinglyService *)service
 {
-    // We're ready to rock!  Go do something amazing!
-    
-//    NSDictionary *event = [NSDictionary dictionaryWithObjectAndKeys:@"foo",@"name",nil];
+    NSLog([NSString stringWithFormat:@"singlyServiceDidAuthorize"]);
+
     [self fireEvent:@"singlyServiceDidAuthorize" withObject:nil];
 }
 
 - (void)singlyServiceDidFail:(SinglyService *)service
                    withError:(NSError *)error
 {
-    //    NSDictionary *event = [NSDictionary dictionaryWithObjectAndKeys:@"foo",@"name",nil];
-    [self fireEvent:@"singlyServiceDidFail" withObject:nil];
+    NSLog([NSString stringWithFormat:@"singlyServiceDidFail"]);
 
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Login Error"
-                                                    message:[error localizedDescription]
-                                                   delegate:self cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-    [alert show];
-    [self dismissModalViewControllerAnimated:YES];
+    [self fireEvent:@"singlyServiceDidFail" withObject:error];
 }
 
+
+
+-(void)makeRequest:(id)args
+{
+    ENSURE_UI_THREAD_1_ARG(args);
+    ENSURE_SINGLE_ARG(args,NSDictionary);
+    
+    id success = [args objectForKey:@"success"];
+    RELEASE_TO_NIL(successCallback);
+    successCallback = [success retain];
+    
+    NSString *endPoint = [TiUtils stringValue:[args objectForKey:@"endPoint"]];
+    
+    NSDictionary *urlParams = [args objectForKey:@"urlParams"];
+    NSLog(@"request body data = ", urlParams);
+    
+    SinglyRequest *request = [SinglyRequest requestWithEndpoint:endPoint andParameters:urlParams];
+    
+    NSDictionary *postParams = [args objectForKey:@"postParams"];
+    [request setHTTPBody:[self encodeDictionary:postParams]];
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               
+                               NSArray *responseObject = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+                               [self _fireEventToListener:@"success" withObject:responseObject listener:successCallback thisObject:nil];
+                               
+                           }
+     ];
+}
+
+
+
+/**
+ * Utility function to encode a dictionary into a querystring
+ */
+- (NSData*)encodeDictionary:(NSDictionary*)dictionary {
+    NSMutableArray *parts = [[NSMutableArray alloc] init];
+    for (NSString *key in dictionary) {
+        NSString *encodedValue = [[dictionary objectForKey:key] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *encodedKey = [key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *part = [NSString stringWithFormat: @"%@=%@", encodedKey, encodedValue];
+        [parts addObject:part];
+    }
+    NSString *encodedDictionary = [parts componentsJoinedByString:@"&"];
+    return [encodedDictionary dataUsingEncoding:NSUTF8StringEncoding];
+}
 
 
 
