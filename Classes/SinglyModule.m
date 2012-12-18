@@ -82,7 +82,7 @@
 -(void)makeRequest:(id)args
 {
     ENSURE_UI_THREAD_1_ARG(args);
-    ENSURE_SINGLE_ARG(args,NSDictionary);
+    ENSURE_SINGLE_ARG(args, NSDictionary);
     
     id success = [args objectForKey:@"success"];
     RELEASE_TO_NIL(successCallback);
@@ -91,12 +91,25 @@
     NSString *endPoint = [TiUtils stringValue:[args objectForKey:@"endPoint"]];
     
     NSDictionary *urlParams = [args objectForKey:@"urlParams"];
-    NSLog(@"request body data = ", urlParams);
+    NSLog(@"urlParams = %@", urlParams);
     
     SinglyRequest *request = [SinglyRequest requestWithEndpoint:endPoint andParameters:urlParams];
-    
+
     NSDictionary *postParams = [args objectForKey:@"postParams"];
-    [request setHTTPBody:[self encodeDictionary:postParams]];
+    if (postParams) {
+        
+        NSLog(@"makeRequest >> POST");
+        [request setHTTPMethod: @"POST"];
+        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+
+        NSLog(@"postParams = %@", postParams);
+//        NSData *requestData = [self encodeDictionary:postParams];
+        NSData *requestData = [NSJSONSerialization dataWithJSONObject:postParams options:kNilOptions error:nil];
+        
+        NSString *requestString = [[NSString alloc] initWithData:requestData encoding:NSASCIIStringEncoding];
+        NSLog(@"requestData = %@", requestString);
+        [request setHTTPBody: requestData];
+    }
     
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
@@ -122,6 +135,7 @@
         [parts addObject:part];
     }
     NSString *encodedDictionary = [parts componentsJoinedByString:@"&"];
+    NSLog(@"encodedDictionary = %@", encodedDictionary);
     return [encodedDictionary dataUsingEncoding:NSUTF8StringEncoding];
 }
 
