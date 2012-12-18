@@ -12,8 +12,13 @@
 
 @implementation SinglyModule
 
-#pragma mark Internal
+#pragma Public APIs
 
+/**
+ * Tell Singly the app's credentials and start the session.
+ *
+ *
+ */
 -(void)startSession:(id)args
 {
     ENSURE_UI_THREAD_1_ARG(args);
@@ -24,19 +29,19 @@
     RELEASE_TO_NIL(cancelCallback);
     successCallback = [success retain];
     cancelCallback = [cancel retain];
-
+    
     session = [SinglySession sharedSession];
-
+    
     session.clientID = [TiUtils stringValue:[args objectForKey:@"clientID"]];
     session.clientSecret = [TiUtils stringValue:[args objectForKey:@"clientSecret"]];
     
     [session startSessionWithCompletionHandler:^(BOOL ready) {
         if (ready) {
             NSDictionary *sessionData = [[NSDictionary alloc] initWithObjectsAndKeys:
-                session.accessToken, @"accessToken",
-                session.accountID, @"accoundID",
-                nil
-            ];
+                                         session.accessToken, @"accessToken",
+                                         session.accountID, @"accoundID",
+                                         nil
+                                         ];
             // The session is ready to go!
             [self _fireEventToListener:@"success" withObject:sessionData listener:successCallback thisObject:nil];
         } else {
@@ -46,11 +51,13 @@
     }];
 }
 
+
+
 -(void)requestAuthorization:(id)args
 {
     ENSURE_UI_THREAD_1_ARG(args);
     ENSURE_SINGLE_ARG(args,NSDictionary);
-
+    
     NSString *serviceName = [TiUtils stringValue:[args objectForKey:@"serviceName"]];
     //NSLog([NSString stringWithFormat:@"serviceName: %@", serviceName]);
     
@@ -65,7 +72,7 @@
 - (void)singlyServiceDidAuthorize:(SinglyService *)service
 {
     NSLog([NSString stringWithFormat:@"singlyServiceDidAuthorize"]);
-
+    
     [self fireEvent:@"singlyServiceDidAuthorize" withObject:nil];
 }
 
@@ -73,12 +80,22 @@
                    withError:(NSError *)error
 {
     NSLog([NSString stringWithFormat:@"singlyServiceDidFail"]);
-
+    
     [self fireEvent:@"singlyServiceDidFail" withObject:error];
 }
 
 
-
+/**
+ * Submit a request via the Singly API.
+ *
+ * @param {NSDictionary} args A javascript object from Titanium including the following properties
+ *
+ *         urlParams: name+value pairs to be appended to the request URL
+ *         postParams: name+value pairs to be POSTed in the HTTP body field.
+ *                     If there are postParams, the request will be POSTed as JSON with these params
+ *         success: function to be called when the response is loaded
+ *
+ */
 -(void)makeRequest:(id)args
 {
     ENSURE_UI_THREAD_1_ARG(args);
@@ -94,16 +111,15 @@
     NSLog(@"urlParams = %@", urlParams);
     
     SinglyRequest *request = [SinglyRequest requestWithEndpoint:endPoint andParameters:urlParams];
-
+    
     NSDictionary *postParams = [args objectForKey:@"postParams"];
     if (postParams) {
         
-        NSLog(@"makeRequest >> POST");
+        //        NSLog(@"makeRequest >> POST");
         [request setHTTPMethod: @"POST"];
         [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-
-        NSLog(@"postParams = %@", postParams);
-//        NSData *requestData = [self encodeDictionary:postParams];
+        
+        //        NSLog(@"postParams = %@", postParams);
         NSData *requestData = [NSJSONSerialization dataWithJSONObject:postParams options:kNilOptions error:nil];
         
         NSString *requestString = [[NSString alloc] initWithData:requestData encoding:NSASCIIStringEncoding];
@@ -123,8 +139,12 @@
 
 
 
+#pragma mark Internal
+
 /**
  * Utility function to encode a dictionary into a querystring
+ *
+ * @param {NSDictionary} args The object to be converted to JSON string, then NSData
  */
 - (NSData*)encodeDictionary:(NSDictionary*)dictionary {
     NSMutableArray *parts = [[NSMutableArray alloc] init];
@@ -212,23 +232,5 @@
 	}
 }
 
-#pragma Public APIs
-
--(id)example:(id)args
-{
-	// example method
-	return @"hello world";
-}
-
--(id)exampleProp
-{
-	// example property getter
-	return @"hello world";
-}
-
--(void)setExampleProp:(id)value
-{
-	// example property setter
-}
 
 @end
