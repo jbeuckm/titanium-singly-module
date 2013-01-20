@@ -126,12 +126,21 @@
         NSLog(@"requestData = %@", requestString);
         [request setHTTPBody: requestData];
     }
-    
+
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                
-                               NSArray *responseObject = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-                               [self _fireEventToListener:@"success" withObject:responseObject listener:successCallback thisObject:nil];
+
+                               NSLog(@"responseData = %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+                               
+                               NSArray *responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                               
+                               NSLog(@"responseObject = %@", responseObject);
+                               
+                               // this was added to that raw array responses make it back into Titainum
+                               NSDictionary *resp = [[NSDictionary alloc] initWithObjectsAndKeys:responseObject, @"response", nil];
+                                                            
+                                [self _fireEventToListener:@"success" withObject:resp listener:successCallback thisObject:nil];
                                
                            }
      ];
