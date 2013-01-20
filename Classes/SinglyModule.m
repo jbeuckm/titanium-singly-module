@@ -131,11 +131,11 @@
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                
 
-                               NSLog(@"responseData = %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+//                               NSLog(@"responseData = %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
                                
                                NSArray *responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
                                
-                               NSLog(@"responseObject = %@", responseObject);
+//                               NSLog(@"responseObject = %@", responseObject);
                                
                                // this was added to that raw array responses make it back into Titainum
                                NSDictionary *resp = [[NSDictionary alloc] initWithObjectsAndKeys:responseObject, @"response", nil];
