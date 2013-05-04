@@ -51,6 +51,13 @@
     }];
 }
 
+/*
+-(void)deauthorizeService:(id)args
+{
+    [session 
+    
+}
+*/
 
 
 -(void)requestAuthorization:(id)args
@@ -82,6 +89,11 @@
     NSLog([NSString stringWithFormat:@"singlyServiceDidFail"]);
     
     [self fireEvent:@"singlyServiceDidFail" withObject:error];
+}
+
+-(id)profiles
+{
+    return [session profiles];
 }
 
 

@@ -15,4 +15,6 @@
     KrollCallback *cancelCallback;
 }
 
+-(id)profiles;
+
 @end
