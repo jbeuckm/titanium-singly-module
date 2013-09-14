@@ -3,6 +3,8 @@
 #import "TiHost.h"
 #import "TiUtils.h"
 
+#import "NSData+PHBase64.h"
+
 
 @implementation SinglyModule
 
@@ -98,6 +100,7 @@
 {
     ENSURE_UI_THREAD_1_ARG(args);
     ENSURE_SINGLE_ARG(args, NSDictionary);
+
     
     id success = [args objectForKey:@"success"];
     RELEASE_TO_NIL(successCallback);
@@ -106,22 +109,67 @@
     NSString *endPoint = [TiUtils stringValue:[args objectForKey:@"endPoint"]];
     
     NSDictionary *urlParams = [args objectForKey:@"urlParams"];
-    NSLog(@"urlParams = %@", urlParams);
     
     SinglyRequest *request = [SinglyRequest requestWithEndpoint:endPoint andParameters:urlParams];
     
     NSDictionary *postParams = [args objectForKey:@"postParams"];
-    if (postParams) {
+
+    TiBlob *blob = [args objectForKey:@"photo"];
+
+    // need multipart to upload photo
+    if (blob) {
+
+        UIImage *photo = [blob image];
+        NSData *photoData = UIImagePNGRepresentation(photo);
+        NSString *encodedPhoto = [photoData base64Encoding];
+
         
-        //        NSLog(@"makeRequest >> POST");
+        NSString *boundary = @"EWiiP754JfG";
+        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@",boundary];
+
+        [request setHTTPMethod: @"POST"];
+        [request addValue:contentType forHTTPHeaderField: @"Content-Type"];
+        
+        
+        NSMutableData *postData = [[NSMutableData data] retain];
+
+        // first boundary and image data
+        [postData appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[self encodeMultipartFileParam:@"photo" data:photoData filename:@"photo.png"]];
+
+        
+        for (NSString *key in postParams) {
+            
+            // begin each with a boundary
+            [postData appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+            
+            NSString *value = [postParams objectForKey:key];
+            
+            [postData appendData:[self encodeMultipartParam:key data:value]];
+        }
+        
+        // final boundary
+        [postData appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        int len = [[postData base64Encoding] length];
+        [request addValue:[NSString stringWithFormat:@"%d", len] forHTTPHeaderField: @"Content-Length"];
+
+        
+        NSString *requestString = [[NSString alloc] initWithData:postData encoding:NSASCIIStringEncoding];
+        NSLog(@"[INFO] requestData = %@", requestString);
+        [request setHTTPBody:postData];
+        
+    }
+    else if (postParams) {
+        
         [request setHTTPMethod: @"POST"];
         [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
         
-        //        NSLog(@"postParams = %@", postParams);
         NSData *requestData = [NSJSONSerialization dataWithJSONObject:postParams options:kNilOptions error:nil];
         
         NSString *requestString = [[NSString alloc] initWithData:requestData encoding:NSASCIIStringEncoding];
-        NSLog(@"requestData = %@", requestString);
+        NSLog(@"[INFO] requestData = %@", requestString);
+        
         [request setHTTPBody: requestData];
     }
 
@@ -143,24 +191,64 @@
 
 #pragma mark Internal
 
+
+
 /**
- * Utility function to encode a dictionary into a querystring
- *
- * @param {NSDictionary} args The object to be converted to JSON string, then NSData
+ * Utility function to encode a file for a multipart POST
  */
-- (NSData*)encodeDictionary:(NSDictionary*)dictionary {
-    NSMutableArray *parts = [[NSMutableArray alloc] init];
-    for (NSString *key in dictionary) {
-        NSString *encodedValue = [[dictionary objectForKey:key] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSString *encodedKey = [key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSString *part = [NSString stringWithFormat: @"%@=%@", encodedKey, encodedValue];
-        [parts addObject:part];
-    }
-    NSString *encodedDictionary = [parts componentsJoinedByString:@"&"];
-    NSLog(@"encodedDictionary = %@", encodedDictionary);
-    return [encodedDictionary dataUsingEncoding:NSUTF8StringEncoding];
+- (NSData*)encodeMultipartFileParam:(NSString*)param data:(NSData*)fileData filename:(NSString*)filename
+{    
+    NSMutableData *postData = [[NSMutableData data] retain];
+    
+    
+    [postData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n", param, filename] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [postData appendData:[@"Content-Type: application/octet-stream\r\n\r\ndata:image/png;base64," dataUsingEncoding:NSUTF8StringEncoding]];
+    
+//    [postData appendData:[@"Content-Type: image/png\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [postData appendData:[[fileData base64Encoding] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    return postData;
 }
 
+
+
+/**
+ * Utility function to encode a normal key/val pair for a multipart POST
+ */
+- (NSData*)encodeMultipartParam:(NSString*)param data:(NSString*)data
+{    
+    NSMutableData *postData = [[NSMutableData data] retain];
+    
+    [postData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", param] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [postData appendData:[data dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    return postData;
+}
+
+
+
+    /**
+     * Utility function to encode a dictionary into a querystring
+     *
+     * @param {NSDictionary} args The object to be converted to JSON string, then NSData
+     */
+     - (NSData*)encodeDictionary:(NSDictionary*)dictionary {
+         NSMutableArray *parts = [[NSMutableArray alloc] init];
+         for (NSString *key in dictionary) {
+             NSString *encodedValue = [[dictionary objectForKey:key] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+             NSString *encodedKey = [key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+             NSString *part = [NSString stringWithFormat: @"%@=%@", encodedKey, encodedValue];
+             [parts addObject:part];
+         }
+         NSString *encodedDictionary = [parts componentsJoinedByString:@"&"];
+         NSLog(@"encodedDictionary = %@", encodedDictionary);
+         return [encodedDictionary dataUsingEncoding:NSUTF8StringEncoding];
+     }
+     
+     
 
 
 // this is generated for your module, please do not change it
