@@ -1,9 +1,3 @@
-/**
- * Your Copyright Here
- *
- * Appcelerator Titanium is Copyright (c) 2009-2010 by Appcelerator, Inc.
- * and licensed under the Apache Public License (version 2)
- */
 #import "SinglyModule.h"
 #import "TiBase.h"
 #import "TiHost.h"
@@ -16,8 +10,6 @@
 
 /**
  * Tell Singly the app's credentials and start the session.
- *
- *
  */
 -(void)startSession:(id)args
 {
@@ -51,14 +43,6 @@
     }];
 }
 
-/*
--(void)deauthorizeService:(id)args
-{
-    [session 
-    
-}
-*/
-
 
 -(void)requestAuthorization:(id)args
 {
@@ -66,7 +50,6 @@
     ENSURE_SINGLE_ARG(args,NSDictionary);
     
     NSString *serviceName = [TiUtils stringValue:[args objectForKey:@"serviceName"]];
-    //NSLog([NSString stringWithFormat:@"serviceName: %@", serviceName]);
     
     SinglyService *service = [SinglyService serviceWithIdentifier:serviceName];
     service.delegate = self;
@@ -76,12 +59,14 @@
     [service requestAuthorizationFromViewController:controller];
 }
 
+
 - (void)singlyServiceDidAuthorize:(SinglyService *)service
 {
     NSLog([NSString stringWithFormat:@"singlyServiceDidAuthorize"]);
     
     [self fireEvent:@"singlyServiceDidAuthorize" withObject:nil];
 }
+
 
 - (void)singlyServiceDidFail:(SinglyService *)service
                    withError:(NSError *)error
@@ -90,6 +75,7 @@
     
     [self fireEvent:@"singlyServiceDidFail" withObject:error];
 }
+
 
 -(id)profiles
 {
@@ -142,14 +128,9 @@
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                
-
-//                               NSLog(@"responseData = %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-                               
                                NSArray *responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
                                
-//                               NSLog(@"responseObject = %@", responseObject);
-                               
-                               // this was added to that raw array responses make it back into Titainum
+                               // this was added so that raw array responses make it back into Titanium
                                NSDictionary *resp = [[NSDictionary alloc] initWithObjectsAndKeys:responseObject, @"response", nil];
                                                             
                                 [self _fireEventToListener:@"success" withObject:resp listener:successCallback thisObject:nil];
