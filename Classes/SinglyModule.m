@@ -106,6 +106,10 @@
     RELEASE_TO_NIL(successCallback);
     successCallback = [success retain];
     
+    id error = [args objectForKey:@"error"];
+    RELEASE_TO_NIL(errorCallback);
+    errorCallback = [error retain];
+    
     NSString *endPoint = [TiUtils stringValue:[args objectForKey:@"endPoint"]];
     
     NSDictionary *urlParams = [args objectForKey:@"urlParams"];
@@ -120,11 +124,10 @@
     if (blob) {
 
         UIImage *photo = [blob image];
-        NSData *photoData = UIImagePNGRepresentation(photo);
-        NSString *encodedPhoto = [photoData base64Encoding];
+        NSData *photoData = UIImageJPEGRepresentation(photo, 1.0);
 
         
-        NSString *boundary = @"EWiiP754JfG";
+        NSString *boundary = @"0xC00Lb0uNdArY";
         NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@",boundary];
 
         [request setHTTPMethod: @"POST"];
@@ -133,11 +136,11 @@
         
         NSMutableData *postData = [[NSMutableData data] retain];
 
-        // first boundary and image data
-        [postData appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postData appendData:[self encodeMultipartFileParam:@"photo" data:photoData filename:@"photo.png"]];
-
+        // opening boundary
+        [postData appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[self encodeMultipartFileParam:@"photo" data:photoData filename:@"photo.jpg"]];
         
+
         for (NSString *key in postParams) {
             
             // begin each with a boundary
@@ -147,17 +150,22 @@
             
             [postData appendData:[self encodeMultipartParam:key data:value]];
         }
+
         
         // final boundary
         [postData appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
         
-        int len = [[postData base64Encoding] length];
+
+        [request setHTTPBody:postData];
+        
+        
+        int len = [postData length];
+        NSLog([NSString stringWithFormat:@"[INFO] Content-Length: %d", len]);
         [request addValue:[NSString stringWithFormat:@"%d", len] forHTTPHeaderField: @"Content-Length"];
 
         
         NSString *requestString = [[NSString alloc] initWithData:postData encoding:NSASCIIStringEncoding];
         NSLog(@"[INFO] requestData = %@", requestString);
-        [request setHTTPBody:postData];
         
     }
     else if (postParams) {
@@ -176,13 +184,19 @@
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                
+                               if (error) {
+                                   [self _fireEventToListener:@"error" withObject:error listener:errorCallback thisObject:nil];
+                               }
+                               else {
+                                   
                                NSArray *responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
                                
                                // this was added so that raw array responses make it back into Titanium
                                NSDictionary *resp = [[NSDictionary alloc] initWithObjectsAndKeys:responseObject, @"response", nil];
-                                                            
+                                   
                                 [self _fireEventToListener:@"success" withObject:resp listener:successCallback thisObject:nil];
                                
+                               }
                            }
      ];
 }
@@ -203,11 +217,9 @@
     
     [postData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n", param, filename] dataUsingEncoding:NSUTF8StringEncoding]];
     
-    [postData appendData:[@"Content-Type: application/octet-stream\r\n\r\ndata:image/png;base64," dataUsingEncoding:NSUTF8StringEncoding]];
-    
-//    [postData appendData:[@"Content-Type: image/png\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    [postData appendData:[[fileData base64Encoding] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postData appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+
+    [postData appendData:fileData];
     
     return postData;
 }
@@ -230,23 +242,23 @@
 
 
 
-    /**
-     * Utility function to encode a dictionary into a querystring
-     *
-     * @param {NSDictionary} args The object to be converted to JSON string, then NSData
-     */
-     - (NSData*)encodeDictionary:(NSDictionary*)dictionary {
-         NSMutableArray *parts = [[NSMutableArray alloc] init];
-         for (NSString *key in dictionary) {
-             NSString *encodedValue = [[dictionary objectForKey:key] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-             NSString *encodedKey = [key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-             NSString *part = [NSString stringWithFormat: @"%@=%@", encodedKey, encodedValue];
-             [parts addObject:part];
-         }
-         NSString *encodedDictionary = [parts componentsJoinedByString:@"&"];
-         NSLog(@"encodedDictionary = %@", encodedDictionary);
-         return [encodedDictionary dataUsingEncoding:NSUTF8StringEncoding];
+/**
+ * Utility function to encode a dictionary into a querystring
+ *
+ * @param {NSDictionary} args The object to be converted to JSON string, then NSData
+ */
+ - (NSData*)encodeDictionary:(NSDictionary*)dictionary {
+     NSMutableArray *parts = [[NSMutableArray alloc] init];
+     for (NSString *key in dictionary) {
+         NSString *encodedValue = [[dictionary objectForKey:key] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+         NSString *encodedKey = [key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+         NSString *part = [NSString stringWithFormat: @"%@=%@", encodedKey, encodedValue];
+         [parts addObject:part];
      }
+     NSString *encodedDictionary = [parts componentsJoinedByString:@"&"];
+     NSLog(@"encodedDictionary = %@", encodedDictionary);
+     return [encodedDictionary dataUsingEncoding:NSUTF8StringEncoding];
+ }
      
      
 

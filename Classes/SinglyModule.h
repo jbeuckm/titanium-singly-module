@@ -6,6 +6,7 @@
     SinglySession *session;
     
     KrollCallback *successCallback;
+    KrollCallback *errorCallback;
     KrollCallback *cancelCallback;
 }
 
