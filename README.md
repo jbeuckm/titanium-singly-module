@@ -45,11 +45,11 @@ And make some requests:
 ```javascript
 singly.makeRequest({
     
-    endPoint: 'types/statuses',
+    endPoint: "types/statuses",
      
     postParams: {
-        to: 'twitter',
-        body: 'test '+d.getTime(),
+        to: "twitter",
+        body: "test posted at "+d.getTime(),
     },
     success: function(resp) {
         alert('Your tweet has been sent.');
@@ -59,5 +59,31 @@ singly.makeRequest({
     }
      
 });
-
 ```
+
+Post a photo to Twitter:
+
+```javascript 
+    var image = $.view.toImage();
+
+    Alloy.Globals.singly.makeRequest({
+
+        endPoint: "types/photos",
+ 
+        postParams: {
+            to: "twitter",
+            body: "Check out my photo!"
+        },
+
+        photo: image,
+        
+        success: function(resp) {
+            alert('Your tweet has been sent.');
+        },
+        failure: function(resp) {
+            alert('There was a problem sending your tweet.');
+        }
+
+    });
+```
+

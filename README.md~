@@ -1,4 +1,5 @@
-*** Usage ***
+
+## Usage ##
 
 Prepare the Singly session:
 
