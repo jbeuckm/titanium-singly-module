@@ -3,7 +3,6 @@
 #import "TiHost.h"
 #import "TiUtils.h"
 
-#import "NSData+PHBase64.h"
 
 
 @implementation SinglyModule
