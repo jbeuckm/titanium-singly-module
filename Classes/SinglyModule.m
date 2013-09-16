@@ -102,6 +102,10 @@
     ENSURE_SINGLE_ARG(args, NSDictionary);
 
     
+    id progress = [args objectForKey:@"progress"];
+    RELEASE_TO_NIL(progressCallback);
+    progressCallback = [progress retain];
+    
     id success = [args objectForKey:@"success"];
     RELEASE_TO_NIL(successCallback);
     successCallback = [success retain];
@@ -162,10 +166,6 @@
         int len = [postData length];
         NSLog([NSString stringWithFormat:@"[INFO] Content-Length: %d", len]);
         [request addValue:[NSString stringWithFormat:@"%d", len] forHTTPHeaderField: @"Content-Length"];
-
-        
-        NSString *requestString = [[NSString alloc] initWithData:postData encoding:NSASCIIStringEncoding];
-        NSLog(@"[INFO] requestData = %@", requestString);
         
     }
     else if (postParams) {
@@ -175,30 +175,12 @@
         
         NSData *requestData = [NSJSONSerialization dataWithJSONObject:postParams options:kNilOptions error:nil];
         
-        NSString *requestString = [[NSString alloc] initWithData:requestData encoding:NSASCIIStringEncoding];
-        NSLog(@"[INFO] requestData = %@", requestString);
-        
         [request setHTTPBody: requestData];
     }
+    
 
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                               
-                               if (error) {
-                                   [self _fireEventToListener:@"error" withObject:error listener:errorCallback thisObject:nil];
-                               }
-                               else {
-                                   
-                               NSArray *responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-                               
-                               // this was added so that raw array responses make it back into Titanium
-                               NSDictionary *resp = [[NSDictionary alloc] initWithObjectsAndKeys:responseObject, @"response", nil];
-                                   
-                                [self _fireEventToListener:@"success" withObject:resp listener:successCallback thisObject:nil];
-                               
-                               }
-                           }
-     ];
+    NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+
 }
 
 
@@ -212,7 +194,7 @@
  */
 - (NSData*)encodeMultipartFileParam:(NSString*)param data:(NSData*)fileData filename:(NSString*)filename
 {    
-    NSMutableData *postData = [[NSMutableData data] retain];
+    NSMutableData *postData = [NSMutableData data];
     
     
     [postData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n", param, filename] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -231,7 +213,7 @@
  */
 - (NSData*)encodeMultipartParam:(NSString*)param data:(NSString*)data
 {    
-    NSMutableData *postData = [[NSMutableData data] retain];
+    NSMutableData *postData = [NSMutableData data];
     
     [postData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", param] dataUsingEncoding:NSUTF8StringEncoding]];
     
@@ -259,8 +241,58 @@
      NSLog(@"encodedDictionary = %@", encodedDictionary);
      return [encodedDictionary dataUsingEncoding:NSUTF8StringEncoding];
  }
-     
-     
+
+
+
+
+#pragma mark NSURLConnection Delegate Methods
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+    // A response has been received, this is where we initialize the instance var you created
+    // so that we can append data to it in the didReceiveData method
+    // Furthermore, this method is called each time there is a redirect so reinitializing it
+    // also serves to clear it
+    _responseData = [[[NSMutableData alloc] init] retain];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    // Append the new data to the instance variable you declared
+    [_responseData appendData:data];
+}
+
+- (NSCachedURLResponse *)connection:(NSURLConnection *)connection
+                  willCacheResponse:(NSCachedURLResponse*)cachedResponse {
+    // Return nil to indicate not necessary to store a cached response for this connection
+    return nil;
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    NSArray *responseObject = [NSJSONSerialization JSONObjectWithData:_responseData options:NSJSONReadingMutableContainers error:nil];
+    
+    // this was added so that raw array responses make it back into Titanium
+    NSDictionary *resp = [[NSDictionary alloc] initWithObjectsAndKeys:responseObject, @"response", nil];
+    
+    [self _fireEventToListener:@"success" withObject:resp listener:successCallback thisObject:nil];
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+
+    [self _fireEventToListener:@"error" withObject:error listener:errorCallback thisObject:nil];
+
+}
+
+/*
+- (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
+{
+    NSDictionary *sendStatus = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                 totalBytesWritten, @"sent",
+                                 totalBytesExpectedToWrite, @"total",
+                                 nil
+                                 ];
+
+    [self _fireEventToListener:@"progress" withObject:sendStatus listener:progressCallback thisObject:nil];
+}
+*/
 
 
 // this is generated for your module, please do not change it
