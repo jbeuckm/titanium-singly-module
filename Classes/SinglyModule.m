@@ -3,6 +3,10 @@
 #import "TiHost.h"
 #import "TiUtils.h"
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> c0bd84c1776fea63d7c5241d3eb5b505109787f0
 
 @implementation SinglyModule
 
