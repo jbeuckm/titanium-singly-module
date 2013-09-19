@@ -3,8 +3,6 @@
 #import "TiHost.h"
 #import "TiUtils.h"
 
-#import "NSData+PHBase64.h"
-
 
 @implementation SinglyModule
 
@@ -281,18 +279,21 @@
 
 }
 
-/*
+
 - (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
+    NSLog(@"[INFO] didSendBodyData %d %d %d", bytesWritten, totalBytesWritten, totalBytesExpectedToWrite)
+    
+    /*
     NSDictionary *sendStatus = [[NSDictionary alloc] initWithObjectsAndKeys:
                                  totalBytesWritten, @"sent",
                                  totalBytesExpectedToWrite, @"total",
                                  nil
                                  ];
-
     [self _fireEventToListener:@"progress" withObject:sendStatus listener:progressCallback thisObject:nil];
-}
 */
+}
+
 
 
 // this is generated for your module, please do not change it

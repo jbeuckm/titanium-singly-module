@@ -1,7 +1,7 @@
 #import "TiModule.h"
 #import <SinglySDK/SinglySDK.h>
 
-@interface SinglyModule : TiModule <SinglyServiceDelegate, NSURLConnectionDelegate>
+@interface SinglyModule : TiModule <SinglyServiceDelegate, NSURLConnectionDataDelegate>
 {
     SinglySession *session;
     
