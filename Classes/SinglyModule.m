@@ -284,13 +284,12 @@
     NSLog(@"[INFO] didSendBodyData %d %d %d", bytesWritten, totalBytesWritten, totalBytesExpectedToWrite)
 
     NSDictionary *sendStatus = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                 totalBytesWritten, @"sent",
-                                 totalBytesExpectedToWrite, @"total",
-                                 nil
-                                 ];
-/*
+                                [NSNumber numberWithUnsignedInteger: totalBytesWritten], @"sent",
+                                 [NSNumber numberWithUnsignedInteger: totalBytesExpectedToWrite ], @"total",
+                                 nil];
+
     [self _fireEventToListener:@"progress" withObject:sendStatus listener:progressCallback thisObject:nil];
-*/
+
 }
 
 
