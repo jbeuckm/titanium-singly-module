@@ -281,7 +281,6 @@
 
 - (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
-    NSLog(@"[INFO] didSendBodyData %d %d %d", bytesWritten, totalBytesWritten, totalBytesExpectedToWrite)
 
     NSDictionary *sendStatus = [[NSDictionary alloc] initWithObjectsAndKeys:
                                 [NSNumber numberWithUnsignedInteger: totalBytesWritten], @"sent",
