@@ -3,11 +3,6 @@
 #import "TiHost.h"
 #import "TiUtils.h"
 
-<<<<<<< HEAD
-=======
-
->>>>>>> c0bd84c1776fea63d7c5241d3eb5b505109787f0
-
 @implementation SinglyModule
 
 #pragma Public APIs
@@ -287,13 +282,13 @@
 - (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
     NSLog(@"[INFO] didSendBodyData %d %d %d", bytesWritten, totalBytesWritten, totalBytesExpectedToWrite)
-    
-    /*
+
     NSDictionary *sendStatus = [[NSDictionary alloc] initWithObjectsAndKeys:
                                  totalBytesWritten, @"sent",
                                  totalBytesExpectedToWrite, @"total",
                                  nil
                                  ];
+/*
     [self _fireEventToListener:@"progress" withObject:sendStatus listener:progressCallback thisObject:nil];
 */
 }
