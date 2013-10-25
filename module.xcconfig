@@ -7,6 +7,8 @@
 // http://developer.apple.com/mac/library/documentation/DeveloperTools/Conceptual/XcodeBuildSystem/400-Build_Configurations/build_configs.html
 // 
 
+EXT_MODS_BASEDIR=$(SRCROOT)
+
 //
 // How to add a Framework (example)
 //
@@ -25,3 +27,4 @@
 //
 // IMPORTANT NOTE: always use $(inherited) in your overrides
 // 
+OTHER_LDFLAGS=$(inherited) -framework Accounts -framework Security -framework QuartzCore -framework AddressBook -framework AddressBookUI -framework Social -framework Twitter -F"${HOME}/Documents/Titanium_Studio_Workspace/titanium-singly-module/" -framework SinglySDK
