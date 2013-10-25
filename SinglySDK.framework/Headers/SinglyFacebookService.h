@@ -2,7 +2,7 @@
 //  SinglyFacebookService.h
 //  SinglySDK
 //
-//  Copyright (c) 2012 Singly, Inc. All rights reserved.
+//  Copyright (c) 2012-2013 Singly, Inc. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:
@@ -34,11 +34,61 @@
 
 /*!
  *
- * A custom implementation of a service specifically for Facebook that adds
- * support for authorization via the integrated support on iOS 6+. If integrated
- * support is not available, the installed Facebook app is tried. If neither
- * integrated authorization is available or the native app is not installed,
- * the standard Singly login workflow will be used.
+ * A subclass of `SinglyService` that adds support for authorization using
+ * either the native support available on iOS 6+ or the Facebook app that is
+ * installed on the user's device. If either of those methods are not available,
+ * the standard web-based workflow will be attempted.
+ *
+ * ### Supporting Native Authorization on iOS 6+
+ *
+ * Before native authorization can be used, you must first register your app at
+ * the [Facebook Developers site](https://developers.facebook.com/apps) as a
+ * "Native iOS App". Be sure to set the "Bundle ID" on your Facebook app to the
+ * exact bundle identifier that is configured in your `Info.plist` file. You
+ * should also [configure your app](https://singly.com/docs/api-keys/facebook)
+ * for the standard web-based workflow.
+ *
+ * ### Supporting Authorization via the Facebook App
+ *
+ * If the user has the Facebook app installed on their device (and native
+ * authorization is not available), the `SinglyFacebookService` will attempt to
+ * authorize the user via the installed app. For this to work, you will need to
+ * enable your app to handle launches with the Facebook URL scheme.
+ *
+ * #### Registering Your Facebook URL Scheme
+ *
+ * Add the following to your `Info.plist` file, replacing the 0's with your
+ * actual Facebook App ID (from the
+ * [developers site](https://developers.facebook.com/apps)):
+ *
+ *     	<key>CFBundleURLTypes</key>
+ *     	<array>
+ *     	  <dict>
+ *     	    <key>CFBundleURLSchemes</key>
+ *     	    <array>
+ *     	      <string>fb000000000000000</string>
+ *     	    </array>
+ *     	  </dict>
+ *     	</array>
+ *
+ * #### Handling Facebook URLs in Your App
+ *
+ * Just registering your app to open with your app-specific Facebook URL is not
+ * enough to complete the round-trip request. We need to also be able to handle
+ * this URL by passing it along to the Singly SDK so that it can complete the
+ * authorization workflow. In your application delegate, implement the following
+ * method:
+ *
+ *     	- (BOOL)application:(UIApplication *)application
+ *     	            openURL:(NSURL *)url
+ *    	  sourceApplication:(NSString *)sourceApplication
+ *     	         annotation:(id)annotation
+ *     	{
+ *     	    return [SinglySession.sharedSession handleOpenURL:url];
+ *     	}
+ *
+ * If you already have this method implemented, you may need to modify it to
+ * check for Facebook URLs and pass only those to the Singly SDK.
  *
  * @available Available in Singly iOS SDK 1.0.0 and later.
  *
@@ -47,11 +97,11 @@
 
 /*!
  *
- * Determines if the current device can authorize via the installed Facebook
- * app.
+ * Determines whether or not the app can use the installed Facebook app to
+ * perform authorization requests.
  *
- * @returns Whether or not the running app is configured correctly for
- *          authorization via the natively installed app.
+ * @returns `YES` if the app is configured correctly for authorization via the
+ *          installed Facebook app.
  *
  * @available Available in Singly iOS SDK 1.0.0 and later.
  *
@@ -60,36 +110,46 @@
 
 /*!
  *
- * Determines whether or not the current device is authenticated with Facebook
- * in the Settings app using the authorization support featured in iOS 6 and
- * higher.
+ * Determines whether or not the current device is signed into Facebook (in
+ * Settings) using the native support offered in iOS 6 and higher.
  *
  * This method will query the account store and operates under the following,
  * undocumented assumptions (as of iOS 6.0):
  *
- *  * If the user has not authenticated with Facebook on their device, the
- *    account store will return `nil` when requesting Facebook accounts.
+ *  * If the user has not signed into Facebook on their device, the account
+ *    store will return `nil` when requesting Facebook accounts.
  *
- *  * If the user has authenticated with Facebook, but we are not yet authorized
+ *  * If the user has signed into Facebook, but the app is not yet authorized
  *    to use the account, the account store will return an empty array (except
  *    in the simulator, which will return the configured account as the array's
  *    only member).
  *
- *  * If the user has authenticated with Facebook and we are already authorized
+ *  * If the user has signed into Facebook and the app is already authorized
  *    to use the account, the account store will return an array with the
  *    authorized account as the only entry.
  *
  * Unfortunately, the above assumptions are the only way to discover what we
- * need to know and quite likely will break in future releases of iOS 6. For
- * that reason, one should keep a close eye on this method to ensure support is
+ * need to know and quite likely will break in future releases of iOS. For that
+ * reason, one should keep a close eye on this method to ensure support is
  * maintained throughout future releases.
  *
- * @returns Whether or not the current device is configured for integrated
- *          authorization.
+ * @returns `YES` if the device is configured for native authorization.
  *
  * @available Available in Singly iOS SDK 1.0.0 and later.
  *
 **/
-- (BOOL)isIntegratedAuthorizationConfigured;
+- (BOOL)isNativeAuthorizationConfigured;
+
+/*!
+ *
+ * If your app requires a URL scheme suffix, set it here before requesting
+ * authorization. When authenticating a user via the Facebook app, it will be
+ * passed as `local_client_id`.
+ *
+ * See [this article at the Facebook developer site](https://developers.facebook.com/docs/howtos/share-appid-across-multiple-apps-ios-sdk/)
+ * for more.
+ *
+**/
+@property (strong) NSString *urlSchemeSuffix;
 
 @end

@@ -2,7 +2,7 @@
 //  SinglyRequest.h
 //  SinglySDK
 //
-//  Copyright (c) 2012 Singly, Inc. All rights reserved.
+//  Copyright (c) 2012-2013 Singly, Inc. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:
@@ -74,7 +74,8 @@
  * @available Available in Singly iOS SDK 1.0.0 and later.
  *
 **/
-+ (id)requestWithEndpoint:(NSString *)endpoint andParameters:(NSDictionary *)parameters;
++ (id)requestWithEndpoint:(NSString *)endpoint
+            andParameters:(NSDictionary *)parameters;
 
 /*!
  *
@@ -105,7 +106,8 @@
  * @available Available in Singly iOS SDK 1.0.0 and later.
  *
 **/
-- (id)initWithEndpoint:(NSString *)endpoint andParameters:(NSDictionary *)parameters;
+- (id)initWithEndpoint:(NSString *)endpoint
+         andParameters:(NSDictionary *)parameters;
 
 /*!
  *
@@ -120,7 +122,8 @@
  * @available Available in Singly iOS SDK 1.0.0 and later.
  *
 **/
-+ (NSURL *)URLForEndpoint:(NSString *)endpoint withParameters:(NSDictionary *)parameters;
++ (NSURL *)URLForEndpoint:(NSString *)endpoint
+           withParameters:(NSDictionary *)parameters;
 
 /*!
  *
@@ -138,7 +141,9 @@
  * @available Available in Singly iOS SDK 1.0.0 and later.
  *
 **/
-+ (NSURL *)URLForEndpoint:(NSString *)endpoint withParameters:(NSDictionary *)parameters andAuthorization:(BOOL)authorization;
++ (NSURL *)URLForEndpoint:(NSString *)endpoint
+           withParameters:(NSDictionary *)parameters
+         andAuthorization:(BOOL)authorization;
 
 /// ----------------------------------------------------------------------------
 /// @name Configuring the Request
@@ -152,7 +157,7 @@
  * @available Available in Singly iOS SDK 1.0.0 and later.
  *
 **/
-@property (nonatomic, strong) NSString *endpoint;
+@property (copy) NSString *endpoint;
 
 /*!
  *
@@ -162,7 +167,7 @@
  * @available Available in Singly iOS SDK 1.0.0 and later.
  *
 **/
-@property (nonatomic, strong) NSDictionary *parameters;
+@property (copy) NSDictionary *parameters;
 
 /*!
  *
@@ -174,6 +179,6 @@
  * @available Available in Singly iOS SDK 1.0.0 and later.
  *
 **/
-@property (nonatomic, assign) BOOL isAuthorizedRequest;
+@property BOOL isAuthorizedRequest;
 
 @end

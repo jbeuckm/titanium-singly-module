@@ -2,7 +2,7 @@
 //  SinglyService+Delegate.h
 //  SinglySDK
 //
-//  Copyright (c) 2012 Singly, Inc. All rights reserved.
+//  Copyright (c) 2012-2013 Singly, Inc. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:
@@ -31,38 +31,69 @@
 
 /*!
  *
- * Delegate methods related to a SinglyService.
+ * A protocol that delegates of a SinglyService may implement to provide custom
+ * behavior at various points of the authorization workflow.
  *
  * @available Available in Singly iOS SDK 1.0.0 and later.
  *
- **/
+**/
 @protocol SinglyServiceDelegate <NSObject>
 
-@required
+@optional
 
 /*!
  *
- * Delegate method for a successful service login.
+ * Delegate method that is called after the user has been successfully
+ * authorized for the given service.
  *
- * @param service  The service instance that this delegate is firing for.
+ * @param service The service instance that handled the authorization.
+ *
+ * @see singlyService:didFailWithError:
  *
  * @available Available in Singly iOS SDK 1.0.0 and later.
  *
- **/
+**/
 - (void)singlyServiceDidAuthorize:(SinglyService *)service;
 
 /*!
  *
- * Delegate method for an error during service login
+ * Delegate method that is called when an error occurs while logging into a
+ * service. Errors can include service, network, parse and any other errors that
+ * might arise during the authorization process.
  *
- * @param service The service where the error occurred
+ * @param service The service instance that was in the process of authorizing
+ *                the user when the error occurred.
  *
- * @param error   The error that occured during login
+ * @param error The actual error object instance that was detected during the
+ *              authorization process.
  *
- * @available Available in Singly iOS SDK 1.0.0 and later.
+ * @see singlyService:didFailWithError:
  *
- **/
-- (void)singlyServiceDidFail:(SinglyService *)service withError:(NSError *)error;
+ * @available Available in Singly iOS SDK 1.0.0 and later. This method is
+ *            **deprecated** and will be removed in a future release. Please use
+ *            singlyService:didFailWithError: instead.
+ *
+**/
+- (void)singlyServiceDidFail:(SinglyService *)service
+                   withError:(NSError *)error DEPRECATED_ATTRIBUTE;
+
+/*!
+ *
+ * Delegate method that is called when an error occurs while logging into a
+ * service. Errors can include service, network, parse and any other errors that
+ * might arise during the authorization process.
+ *
+ * @param service The service instance that was in the process of authorizing
+ *                the user when the error occurred.
+ *
+ * @param error The actual error object instance that was detected during the
+ *              authorization process.
+ *
+ * @available Available in Singly iOS SDK 1.3.0 and later.
+ *
+**/
+- (void)singlyService:(SinglyService *)service
+    didFailWithError:(NSError *)error;
 
 @end
 

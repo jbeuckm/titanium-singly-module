@@ -1,16 +1,16 @@
-# singly Module
+# Singly Module
 
 ## Description
 
 TODO: Enter your module description here
 
-## Accessing the singly Module
+## Accessing the Singly Module
 
 To access this module from JavaScript, you would do the following:
 
-	var singly = require("singly");
+	var Singly = require("com.beuckman.singly");
 
-The singly variable is a reference to the Module object.	
+The Singly variable is a reference to the Module object.	
 
 ## Reference
 

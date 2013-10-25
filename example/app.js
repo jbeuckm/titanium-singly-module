@@ -12,28 +12,83 @@ var label = Ti.UI.createLabel();
 win.add(label);
 win.open();
 
-// TODO: write your module tests here
-var singly = require('singly');
-Ti.API.info("module is => " + singly);
+//Prepare the Singly session:
 
-label.text = singly.example();
+var singly  = require('singly');
+singly.startSession({
 
-Ti.API.info("module exampleProp is => " + singly.exampleProp);
-singly.exampleProp = "This is a test value";
+	clientID: "YOUR_SINGLY_ID",
+	    clientSecret: "YOUR_SINGLY_SECRET",
+	    success: function() {
+	    Ti.API.debug('singly session ready');
+	},
+	    error: function(e) {
+	    Ti.API.info('singly session error '+JSON.stringify(e));
+	}
+    });
 
-if (Ti.Platform.name == "android") {
-	var proxy = singly.createExample({
-		message: "Creating an example Proxy",
-		backgroundColor: "red",
-		width: 100,
-		height: 100,
-		top: 100,
-		left: 150
+
+//handle the outcome...
+
+    singly.addEventListener('singlyServiceDidFail', function(e){
+	    alert('singlyServiceDidFail');
+	    Ti.API.info(e);
 	});
 
-	proxy.printMessage("Hello world!");
-	proxy.message = "Hi world!.  It's me again.";
-	proxy.printMessage("Hello world!");
-	win.add(proxy);
-}
+singly.addEventListener('singlyServiceDidAuthorize', function(e){
+	Ti.API.info('singlyServiceDidAuthorize');
+	connected();
+    });
+
+
+//Now, connect to a service or two (or 20)
+
+    singly.requestAuthorization({
+	    serviceName:'twitter'
+		});    
+
+
+//And make some requests:
+
+singly.makeRequest({
+
+	endPoint: "types/statuses",
+
+	    postParams: {
+	    to: "twitter",
+		body: "test posted at "+d.getTime(),
+		},
+	    success: function(resp) {
+	    alert('Your tweet has been sent.');
+	},
+	    failure: function(resp) {
+	    alert('There was a problem sending your tweet.');
+	}
+
+    });
+
+//Post a photo to Twitter:
+
+var image = $.view.toImage();
+
+Alloy.Globals.singly.makeRequest({
+
+        endPoint: "types/photos",
+
+	    postParams: {
+            to: "twitter",
+		body: "Check out my photo!"
+		},
+
+	    photo: image,
+
+	    success: function(resp) {
+            alert('Your tweet has been sent.');
+        },
+	    failure: function(resp) {
+            alert('There was a problem sending your tweet.');
+        }
+
+    });
+
 

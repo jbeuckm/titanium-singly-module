@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0450"
+   LastUpgradeVersion = "0460"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -16,8 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D2AAC07D0554694100DB518D"
                BuildableName = "libSingly.a"
-               BlueprintName = "singly"
-               ReferencedContainer = "container:singly.xcodeproj">
+               BlueprintName = "Singly"
+               ReferencedContainer = "container:Singly.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

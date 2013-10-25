@@ -25,6 +25,3 @@
 //
 // IMPORTANT NOTE: always use $(inherited) in your overrides
 // 
-OTHER_LDFLAGS=$(inherited) -framework Accounts -framework Security -framework QuartzCore
-//OTHER_LDFLAGS=$(inherited) -F"${HOME}/Documents/US Bank/Titanium/Singly" -framework SinglySDK
-

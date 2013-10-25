@@ -2,7 +2,7 @@
 //  SinglyLoginViewController.h
 //  SinglySDK
 //
-//  Copyright (c) 2012 Singly, Inc. All rights reserved.
+//  Copyright (c) 2012-2013 Singly, Inc. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:
@@ -45,8 +45,7 @@
  * @available Available in Singly iOS SDK 1.0.0 and later.
  *
 **/
-@interface SinglyLoginViewController : UIViewController <UIWebViewDelegate,
-    NSURLConnectionDataDelegate>
+@interface SinglyLoginViewController : UIViewController <UIWebViewDelegate>
 
 /// ----------------------------------------------------------------------------
 /// @name Initializing a Login View Controller
@@ -76,7 +75,7 @@
  * @available Available in Singly iOS SDK 1.0.0 and later.
  *
 **/
-@property (nonatomic, strong) NSString *serviceIdentifier;
+@property (copy) NSString *serviceIdentifier;
 
 /*!
  *
@@ -85,7 +84,7 @@
  * @available Available in Singly iOS SDK 1.0.0 and later.
  *
 **/
-@property (nonatomic, strong) NSString *serviceName;
+@property (copy) NSString *serviceName;
 
 /*!
  *
@@ -94,7 +93,7 @@
  * @available Available in Singly iOS SDK 1.0.0 and later.
  *
 **/
-@property (nonatomic, strong) NSArray *scopes;
+@property (copy) NSArray *scopes;
 
 /*!
  *
@@ -104,7 +103,7 @@
  * @available Available in Singly iOS SDK 1.0.0 and later.
  *
 **/
-@property (nonatomic, strong) NSString *flags;
+@property (copy) NSString *flags;
 
 /// ----------------------------------------------------------------------------
 /// @name Managing the Delegate
@@ -119,6 +118,6 @@
  * @available Available in Singly iOS SDK 1.0.0 and later.
  *
 **/
-@property (nonatomic, strong) id<SinglyLoginViewControllerDelegate> delegate;
+@property (strong) id <SinglyLoginViewControllerDelegate> delegate;
 
 @end

@@ -26,8 +26,8 @@
     session.clientID = [TiUtils stringValue:[args objectForKey:@"clientID"]];
     session.clientSecret = [TiUtils stringValue:[args objectForKey:@"clientSecret"]];
     
-    [session startSessionWithCompletionHandler:^(BOOL ready) {
-        if (ready) {
+    [session startSessionWithCompletion:^(BOOL isReady, NSError *error) {
+        if (isReady) {
             NSDictionary *sessionData = [[NSDictionary alloc] initWithObjectsAndKeys:
                                          session.accessToken, @"accessToken",
                                          session.accountID, @"accoundID",

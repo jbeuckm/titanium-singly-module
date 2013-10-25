@@ -2,7 +2,7 @@
 //  SinglyLoginPickerServiceCell.h
 //  SinglySDK
 //
-//  Copyright (c) 2012 Singly, Inc. All rights reserved.
+//  Copyright (c) 2012-2013 Singly, Inc. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:
@@ -37,7 +37,8 @@
  * @available Available in Singly iOS SDK 1.0.0 and later.
  *
 **/
-@interface SinglyLoginPickerServiceCell : UITableViewCell <NSURLConnectionDelegate,
+@interface SinglyLoginPickerServiceCell : UITableViewCell
+    <NSURLConnectionDelegate,
     NSURLConnectionDataDelegate>
 
 /// ----------------------------------------------------------------------------
@@ -51,7 +52,16 @@
  * @available Available in Singly iOS SDK 1.0.0 and later.
  *
 **/
-@property (nonatomic, strong) NSDictionary *serviceInfoDictionary;
+@property (copy) NSDictionary *serviceInfoDictionary;
+
+/*!
+ *
+ * The service identifier of the service being displayed.
+ *
+ * @available Available in Singly iOS SDK 1.1.0 and later.
+ *
+**/
+@property (copy) NSString *serviceIdentifier;
 
 /*!
  *
@@ -60,6 +70,6 @@
  * @available Available in Singly iOS SDK 1.0.0 and later.
  *
 **/
-@property (nonatomic, assign) BOOL isAuthenticated;
+@property BOOL isAuthenticated;
 
 @end

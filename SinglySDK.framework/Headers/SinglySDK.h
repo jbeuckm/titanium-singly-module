@@ -2,7 +2,7 @@
 //  SinglySDK.h
 //  SinglySDK
 //
-//  Copyright (c) 2012 Singly, Inc. All rights reserved.
+//  Copyright (c) 2012-2013 Singly, Inc. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:
@@ -29,7 +29,6 @@
 
 #import <SinglySDK/SinglyConstants.h>
 #import <SinglySDK/SinglyFacebookService.h>
-#import <SinglySDK/SinglyFriendPickerViewController.h>
 #import <SinglySDK/SinglyLoginPickerViewController.h>
 #import <SinglySDK/SinglyLoginViewController.h>
 #import <SinglySDK/SinglyRequest.h>
