@@ -27,4 +27,4 @@ EXT_MODS_BASEDIR=$(SRCROOT)
 //
 // IMPORTANT NOTE: always use $(inherited) in your overrides
 // 
-OTHER_LDFLAGS=$(inherited) -framework Accounts -framework Security -framework QuartzCore -framework AddressBook -framework AddressBookUI -framework Social -framework Twitter -F"${HOME}/Documents/Titanium_Studio_Workspace/titanium-singly-module" -framework SinglySDK
+OTHER_LDFLAGS=$(inherited) -framework AccountsOTHER_LDFLAGS=$(inherited) -framework Security -framework QuartzCore -framework AddressBook -framework AddressBookUI -framework Social -framework Twitter -F"${HOME}/Documents/Titanium_Studio_Workspace/titanium-singly-module/" -framework SinglySDK
