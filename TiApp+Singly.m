@@ -16,6 +16,8 @@ openURL:(NSURL *)url
 sourceApplication:(NSString *)sourceApplication
 annotation:(id)annotation
 {
+    NSLog(@"[DEBUG] Category-implemented application:openURL:sourceApplication:annotation GOT CALLED");
+    
     return [SinglySession.sharedSession handleOpenURL:url];
 }
 
