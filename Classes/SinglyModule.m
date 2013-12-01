@@ -59,6 +59,27 @@
 }
 
 
+-(void)disconnectService:(id)args
+{
+    ENSURE_UI_THREAD_1_ARG(args);
+    ENSURE_SINGLE_ARG(args,NSDictionary);
+    
+    NSString *serviceName = [TiUtils stringValue:[args objectForKey:@"serviceName"]];
+    
+    SinglyService *service = [SinglyService serviceWithIdentifier:serviceName];
+    
+    [service disconnectWithCompletion:^(BOOL success, NSError *error){
+        if (success) {
+            [self fireEvent:@"disconnect" withObject:serviceName];
+        }
+        else {
+            [self fireEvent:@"disconnectFailed" withObject:serviceName];
+        }
+    }];
+}
+
+
+
 - (void)singlyServiceDidAuthorize:(SinglyService *)service
 {
     NSLog([NSString stringWithFormat:@"singlyServiceDidAuthorize"]);
