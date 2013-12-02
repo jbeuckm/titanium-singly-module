@@ -14,12 +14,9 @@
 {
     ENSURE_UI_THREAD_1_ARG(args);
     ENSURE_SINGLE_ARG(args,NSDictionary);
-    id success = [args objectForKey:@"success"];
-    id cancel = [args objectForKey:@"error"];
-    RELEASE_TO_NIL(successCallback);
-    RELEASE_TO_NIL(cancelCallback);
-    successCallback = [success retain];
-    cancelCallback = [cancel retain];
+
+    KrollCallback *successCallback = [args objectForKey:@"success"];
+    KrollCallback *cancelCallback = [args objectForKey:@"error"];
     
     session = [SinglySession sharedSession];
     
@@ -120,17 +117,9 @@
     ENSURE_SINGLE_ARG(args, NSDictionary);
 
     
-    id progress = [args objectForKey:@"progress"];
-    RELEASE_TO_NIL(progressCallback);
-    progressCallback = [progress retain];
-    
-    id success = [args objectForKey:@"success"];
-    RELEASE_TO_NIL(successCallback);
-    successCallback = [success retain];
-    
-    id error = [args objectForKey:@"error"];
-    RELEASE_TO_NIL(errorCallback);
-    errorCallback = [error retain];
+    id progressCallback = [args objectForKey:@"progress"];
+    id successCallback = [args objectForKey:@"success"];
+    id errorCallback = [args objectForKey:@"error"];
     
     NSString *endPoint = [TiUtils stringValue:[args objectForKey:@"endPoint"]];
     
@@ -198,7 +187,16 @@
     
 
     NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-
+    
+    if (successCallback) {
+        [successCallbacks setObject:successCallback forKey:request];
+    }
+    if (errorCallback) {
+        [errorCallbacks setObject:errorCallback forKey:request];
+    }
+    if (progressCallback) {
+        [progressCallbacks setObject:progressCallback forKey:request];
+    }
 }
 
 
@@ -287,15 +285,25 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     NSArray *responseObject = [NSJSONSerialization JSONObjectWithData:_responseData options:NSJSONReadingMutableContainers error:nil];
     
-    // this was added so that raw array responses make it back into Titanium
-    NSDictionary *resp = [[NSDictionary alloc] initWithObjectsAndKeys:responseObject, @"response", nil];
-    
-    [self _fireEventToListener:@"success" withObject:resp listener:successCallback thisObject:nil];
+    KrollCallback *successCallback = [successCallbacks objectForKey:[connection originalRequest]];
+    if (successCallback) {
+        // this was added so that raw array responses make it back into Titanium
+        NSDictionary *resp = [[[NSDictionary alloc] initWithObjectsAndKeys:responseObject, @"response", nil] autorelease];
+        
+        [self _fireEventToListener:@"success" withObject:resp listener:successCallback thisObject:nil];
+        
+        [successCallbacks removeObjectForKey:[connection originalRequest]];
+    }
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
 
-    [self _fireEventToListener:@"error" withObject:error listener:errorCallback thisObject:nil];
+    KrollCallback *errorCallback = [errorCallbacks objectForKey:[connection originalRequest]];
+    if (errorCallback) {
+        [self _fireEventToListener:@"error" withObject:error listener:errorCallback thisObject:nil];
+        
+        [errorCallbacks removeObjectForKey:[connection originalRequest]];
+    }
 
 }
 
@@ -303,13 +311,20 @@
 - (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
 
-    NSDictionary *sendStatus = [[NSDictionary alloc] initWithObjectsAndKeys:
+    KrollCallback *progressCallback = [progressCallbacks objectForKey:[connection originalRequest]];
+    if (progressCallback) {
+        
+        NSDictionary *sendStatus = [[NSDictionary alloc] initWithObjectsAndKeys:
                                 [NSNumber numberWithUnsignedInteger: totalBytesWritten], @"sent",
                                  [NSNumber numberWithUnsignedInteger: totalBytesExpectedToWrite ], @"total",
                                  nil];
 
-    [self _fireEventToListener:@"progress" withObject:sendStatus listener:progressCallback thisObject:nil];
-
+        [self _fireEventToListener:@"progress" withObject:sendStatus listener:progressCallback thisObject:nil];
+        
+        if (totalBytesWritten == totalBytesExpectedToWrite) {
+            [progressCallbacks removeObjectForKey:[connection originalRequest]];
+        }
+    }
 }
 
 
@@ -333,6 +348,8 @@
 	// this method is called when the module is first loaded
 	// you *must* call the superclass
 	[super startup];
+    
+    successCallbacks = [[NSMutableDictionary alloc] init];
 	
 	NSLog(@"[INFO] %@ loaded",self);
 }

@@ -5,10 +5,9 @@
 {
     SinglySession *session;
     
-    KrollCallback *progressCallback;
-    KrollCallback *successCallback;
-    KrollCallback *errorCallback;
-    KrollCallback *cancelCallback;
+    NSMutableDictionary *progressCallbacks;
+    NSMutableDictionary *errorCallbacks;
+    NSMutableDictionary *successCallbacks;
 
     NSMutableData *_responseData;
 }
