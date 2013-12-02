@@ -89,7 +89,7 @@ Post a photo to Twitter:
 Disconnect from a service (untested):
 
 ```javascript
-Alloy.Globals.singlydisconnectService({
+Alloy.Globals.singly.disconnectService({
         serviceName: "twitter"
 });
 ```
