@@ -1,4 +1,3 @@
-
 ## Usage ##
 
 Prepare the Singly session:
@@ -86,4 +85,13 @@ Post a photo to Twitter:
 
     });
 ```
+
+Disconnect from a service (untested):
+
+```javascript
+Alloy.Globals.singlydisconnectService({
+        serviceName: "twitter"
+});
+```
+
 
