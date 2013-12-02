@@ -63,33 +63,33 @@ singly.makeRequest({
 Post a photo to Twitter:
 
 ```javascript 
-    var image = $.view.toImage();
+var image = $.view.toImage();
 
-    Alloy.Globals.singly.makeRequest({
+singly.makeRequest({
 
-        endPoint: "types/photos",
- 
-        postParams: {
-            to: "twitter",
-            body: "Check out my photo!"
-        },
+    endPoint: "types/photos",
 
-        photo: image,
-        
-        success: function(resp) {
-            alert('Your tweet has been sent.');
-        },
-        failure: function(resp) {
-            alert('There was a problem sending your tweet.');
-        }
+    postParams: {
+        to: "twitter",
+        body: "Check out my photo!"
+    },
 
-    });
+    photo: image,
+    
+    success: function(resp) {
+        alert('Your tweet has been sent.');
+    },
+    failure: function(resp) {
+        alert('There was a problem sending your tweet.');
+    }
+
+});
 ```
 
 Disconnect from a service (untested):
 
 ```javascript
-Alloy.Globals.singly.disconnectService({
+singly.disconnectService({
         serviceName: "twitter"
 });
 ```
