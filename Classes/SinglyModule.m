@@ -85,7 +85,7 @@
 {
     NSLog([NSString stringWithFormat:@"singlyServiceDidAuthorize"]);
     
-    [self fireEvent:@"singlyServiceDidAuthorize" withObject:nil];
+    [self fireEvent:@"singlyServiceDidAuthorize" withObject:[service serviceIdentifier]];
 }
 
 
@@ -314,7 +314,7 @@
 
 - (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
-
+    NSLog(@"[DEBUG] upload progress %d / %d ", totalBytesWritten, totalBytesExpectedToWrite);
     KrollCallback *progressCallback = [progressCallbacks objectForKey:[connection originalRequest]];
     if (progressCallback) {
         
@@ -354,6 +354,8 @@
 	[super startup];
     
     successCallbacks = [[NSMutableDictionary alloc] init];
+    progressCallbacks = [[NSMutableDictionary alloc] init];
+    errorCallbacks = [[NSMutableDictionary alloc] init];
 	
 	NSLog(@"[INFO] %@ loaded",self);
 }
