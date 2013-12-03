@@ -63,14 +63,18 @@
     
     NSString *serviceName = [TiUtils stringValue:[args objectForKey:@"serviceName"]];
     
+    KrollCallback *successCallback = [args objectForKey:@"success"];
+    KrollCallback *errorCallback = [args objectForKey:@"error"];
+    
+
     SinglyService *service = [SinglyService serviceWithIdentifier:serviceName];
     
     [service disconnectWithCompletion:^(BOOL success, NSError *error){
         if (success) {
-            [self fireEvent:@"disconnect" withObject:serviceName];
+            [self _fireEventToListener:@"success" withObject:serviceName listener:successCallback thisObject:nil];
         }
         else {
-            [self fireEvent:@"disconnectFailed" withObject:serviceName];
+            [self _fireEventToListener:@"error" withObject:error listener:errorCallback thisObject:nil];
         }
     }];
 }
